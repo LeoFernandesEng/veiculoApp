@@ -3,9 +3,11 @@ package com.app.veiculos_app.controller;
 import com.app.veiculos_app.model.Veiculo;
 import com.app.veiculos_app.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -71,4 +73,29 @@ public class VeiculoController {
     public void deleteVeiculo(@PathVariable Long id) {
         veiculoService.deleteVeiculo(id);
     }
+
+    @GetMapping("/nao-vendidos/count")
+    public ResponseEntity<Long> getCountVeiculosNaoVendidos() {
+        long count = veiculoService.countVeiculosNaoVendidos();
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/decadas")
+    public ResponseEntity<Map<String, Long>> getDistribuicaoPorDecada() {
+        Map<String, Long> distribuicao = veiculoService.getDistribuicaoPorDecada();
+        return ResponseEntity.ok(distribuicao);
+    }
+
+    @GetMapping("/fabricantes")
+    public ResponseEntity<Map<String, Long>> getDistribuicaoPorFabricante() {
+        Map<String, Long> distribuicao = veiculoService.getDistribuicaoPorFabricante();
+        return ResponseEntity.ok(distribuicao);
+    }
+
+    @GetMapping("/ultima-semana")
+    public ResponseEntity<List<Veiculo>> getVeiculosUltimaSemana() {
+        List<Veiculo> veiculos = veiculoService.getVeiculosUltimaSemana();
+        return ResponseEntity.ok(veiculos);
+    }
+
 }

@@ -5,7 +5,9 @@ import com.app.veiculos_app.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,25 @@ public class VeiculoService {
                         (ano == null || veiculo.getAno().equals(ano)) &&
                         (cor == null || (veiculo.getCor() != null && veiculo.getCor().equalsIgnoreCase(cor))))
                 .collect(Collectors.toList());
+    }
+
+    public long countVeiculosNaoVendidos() {
+        return veiculoRepository.countByVendidoFalse();
+    }
+
+    public Map<String, Long> getDistribuicaoPorDecada() {
+        return veiculoRepository.findAll().stream()
+                .collect(Collectors.groupingBy(v -> (v.getAno() / 10) * 10 + "s", Collectors.counting()));
+    }
+
+    public Map<String, Long> getDistribuicaoPorFabricante() {
+        return veiculoRepository.findAll().stream()
+                .collect(Collectors.groupingBy(Veiculo::getMarca, Collectors.counting()));
+    }
+
+    public List<Veiculo> getVeiculosUltimaSemana() {
+        LocalDateTime umaSemanaAtras = LocalDateTime.now().minusWeeks(1);
+        return veiculoRepository.findByCreatedAfter(umaSemanaAtras);
     }
 
     public List<Veiculo> getAllVeiculos() {
