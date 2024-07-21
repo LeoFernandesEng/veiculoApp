@@ -7,12 +7,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class VeiculoService {
 
     @Autowired
     private VeiculoRepository veiculoRepository;
+
+
+    public List<Veiculo> getVeiculos(String marca, Integer ano, String cor) {
+        List<Veiculo> veiculos = veiculoRepository.findAll();
+
+        return veiculos.stream()
+                .filter(veiculo -> (marca == null || veiculo.getMarca().equalsIgnoreCase(marca)) &&
+                        (ano == null || veiculo.getAno().equals(ano)) &&
+                        (cor == null || (veiculo.getCor() != null && veiculo.getCor().equalsIgnoreCase(cor))))
+                .collect(Collectors.toList());
+    }
 
     public List<Veiculo> getAllVeiculos() {
         return veiculoRepository.findAll();
@@ -31,6 +43,7 @@ public class VeiculoService {
         veiculo.setVeiculo(veiculoDetails.getVeiculo());
         veiculo.setMarca(veiculoDetails.getMarca());
         veiculo.setAno(veiculoDetails.getAno());
+        veiculo.setCor(veiculoDetails.getCor());
         veiculo.setDescricao(veiculoDetails.getDescricao());
         veiculo.setVendido(veiculoDetails.getVendido());
         return veiculoRepository.save(veiculo);

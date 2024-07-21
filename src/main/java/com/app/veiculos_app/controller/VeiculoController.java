@@ -16,9 +16,17 @@ public class VeiculoController {
     private VeiculoService veiculoService;
 
     @GetMapping
-    public List<Veiculo> getAllVeiculos() {
-        return veiculoService.getAllVeiculos();
+    public List<Veiculo> getVeiculos(
+            @RequestParam(required = false) String marca,
+            @RequestParam(required = false) Integer ano,
+            @RequestParam(required = false) String cor) {
+        if (marca == null && ano == null && cor == null) {
+            return veiculoService.getAllVeiculos();
+        } else {
+            return veiculoService.getVeiculos(marca, ano, cor);
+        }
     }
+
 
     @GetMapping("/{id}")
     public Optional<Veiculo> getVeiculoById(@PathVariable Long id) {
@@ -46,6 +54,9 @@ public class VeiculoController {
         }
         if (veiculoDetails.getAno() != null) {
             veiculo.setAno(veiculoDetails.getAno());
+        }
+        if (veiculoDetails.getCor() != null){
+            veiculo.setCor(veiculoDetails.getCor());
         }
         if (veiculoDetails.getDescricao() != null) {
             veiculo.setDescricao(veiculoDetails.getDescricao());

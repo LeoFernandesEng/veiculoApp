@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 public class Veiculo {
 
@@ -14,34 +15,28 @@ public class Veiculo {
     private Long id;
 
     @Setter
-    @Getter
     private String veiculo;
 
     @Setter
-    @Getter
     private String marca;
 
     @Setter
-    @Getter
     private Integer ano;
 
     @Setter
-    @Getter
+    private String cor;
+
+    @Setter
     private String descricao;
 
     @Setter
-    @Getter
     private Boolean vendido;
 
     @Setter
-    @Getter
     private LocalDateTime created;
 
     @Setter
-    @Getter
     private LocalDateTime updated;
-
-    // Getters e Setters
 
     @PrePersist
     protected void onCreate() {
