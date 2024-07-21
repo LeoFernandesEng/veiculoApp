@@ -18,16 +18,16 @@ const VeiculoDetails = () => {
 
   useEffect(() => {
     fetchVeiculo();
-  }, [id]); // Add id as dependency
+  }, [id]);
 
   if (!veiculo) {
     return <div>Loading...</div>;
   }
 
   return (
-    <Container>
+    <Container className="mt-4">
       <Card>
-        <Card.Header>{veiculo.veiculo}</Card.Header>
+        <Card.Header className="bg-primary text-white">{veiculo.veiculo}</Card.Header>
         <Card.Body>
           <Card.Title>{veiculo.marca}</Card.Title>
           <Card.Text>
@@ -35,10 +35,15 @@ const VeiculoDetails = () => {
             Cor: {veiculo.cor}<br />
             Descrição: {veiculo.descricao}<br />
             Vendido: {veiculo.vendido ? 'Sim' : 'Não'}<br />
-            Created: {new Date(veiculo.created).toLocaleString()}<br />
-            Updated: {veiculo.updated ? new Date(veiculo.updated).toLocaleString() : 'N/A'}<br />
+            Criado em: {new Date(veiculo.created).toLocaleString()}<br />
+            Atualizado em: {veiculo.updated ? new Date(veiculo.updated).toLocaleString() : 'N/A'}<br />
           </Card.Text>
-          <Button as={Link} to={`/veiculos/${veiculo.id}/edit`} variant="primary">Editar</Button>
+          <Link to={`/veiculos/${veiculo.id}/edit`}>
+            <Button variant="primary" className="me-2">Editar</Button>
+          </Link>
+          <Link to="/veiculos">
+            <Button variant="secondary">Voltar</Button>
+          </Link>
         </Card.Body>
       </Card>
     </Container>
