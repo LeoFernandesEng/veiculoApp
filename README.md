@@ -45,7 +45,7 @@ Antes de iniciar, você precisará das seguintes ferramentas instaladas:
 4. **Execute o backend:**
 
     ```bash
-    Execute o spring aplication : VeiculosAppApplication.java na sua IDE de escolha. 
+    Execute o spring aplication na VeiculosAppApplication.java na sua IDE de escolha. 
     ```
 
     O backend será iniciado na porta `8080` por padrão.
